@@ -35,6 +35,17 @@ Kernel,Dtbo,Dtb均提取至MIUI20.11.7-Android11
 sudo apt update&&sudo apt install git-core gnupg flex bison gperf zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache 
 libgl1-mesa-dev libxml2-utils xsltproc unzip openjdk-8-jdk build-essential git repo fastboot adb
 ```
+配置ccache
+```
+# 启用ccache
+export USE_CCACHE=1
+# 改变ccache缓存路径
+export CCACHE_DIR=~/.ccache
+# 生效
+source ~/bashrc
+# 配置ccache大小
+ccache -M 50G
+```
 
 创建进入Twrp文件夹
 ```
@@ -45,7 +56,7 @@ mkdir -p twrp&&cd twrp
 
 ```
 repo init -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-10.0
-repo sync
+repo sync -j8
 ```
 
 添加这个项目到 .repo/manifest.xml:
@@ -68,7 +79,7 @@ mka recoveryimage ALLOW_MISSING_DEPENDENCIES=true # Only if you use minimal twrp
 
 临时测试:
 ```
-fastboot boot out/target/product/umi/recovery.img
+fastboot boot out/target/product/cmi/recovery.img
 ```
 
 刷入:
